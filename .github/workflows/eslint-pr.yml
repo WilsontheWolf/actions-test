@@ -13,4 +13,4 @@ jobs:
           reporter: github-pr-review
           eslint_flags: 'src/'
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
