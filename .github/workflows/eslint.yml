@@ -2,29 +2,42 @@ name: ESLint
 on:
   push:
     paths:
-    - '**.js'
+      - "**.js"
+  pull_request:
 
-jobs: 
-  run:
-    if: "! contains(toJSON(github.event.commits.*.message), '[SKIP-CI]') && toJSON(github.event.commits.*.message) != '[ESLint] Auto formatting.'"
-    name: Lint with ESLint
+jobs:
+  setup:
+    name: Setup the Environment
     runs-on: ubuntu-latest
-    steps: 
-    - name: Checkout repo
-      uses: actions/checkout@v2
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.x
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+  fix:
+    name: Fix code [Push]
+    if: "github.event == 'push' || ! contains(toJSON(github.event.commits.*.message), '[SKIP-CI]') && toJSON(github.event.commits.*.message) != '[ESLint] Auto formatting.'"
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run ESLint
+        run: npx eslint . --fix
 
-    - name: Run ESLint
-      run: npx eslint . --fix
-
-    - name: Commit changes
-      uses: EndBug/add-and-commit@v5
-      with:
-        message: "[ESLint] Auto formatting."
-        add: "*.js"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v5
+        with:
+          message: "[ESLint] Auto formatting."
+          add: "*.js"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  check:
+    name: Check code [PR]
+    needs: setup
+    runs-on: ubuntu-latest
+    if: "github.event == 'pull_request'"
+    steps:
+      - name: Run ESLint
+        run: npx eslint .
