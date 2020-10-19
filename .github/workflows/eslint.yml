@@ -3,7 +3,7 @@ on: push
 
 jobs: 
   run:
-    if: "! contains(toJSON(github.event.commits.*.message), '[SKIP-CI]') && toJSON(github.event.commits.*.message !== 'Auto formatting.')"
+    if: "! contains(toJSON(github.event.commits.*.message), '[SKIP-CI]') && toJSON(github.event.commits.*.message) != 'Auto formatting.'"
     name: Lint with ESLint
     runs-on: ubuntu-latest
     steps: 
