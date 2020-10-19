@@ -6,8 +6,6 @@ jobs:
     name: Review & fix with ESLint
     runs-on: ubuntu-latest
     if: "! contains(toJSON(github.event.commits.*.message), '[SKIP-CI]') && toJSON(github.event.commits.*.message) != '[ESLint] Auto formatting.'"
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v1
@@ -30,3 +28,5 @@ jobs:
         with:
           message: "[ESLint] Auto formatting."
           add: "*.js"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
