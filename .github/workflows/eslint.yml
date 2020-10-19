@@ -30,7 +30,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   check:
     name: Check code [PR]
-    needs: setup
     runs-on: ubuntu-latest
     if: "github.event == 'pull_request'"
     steps:
