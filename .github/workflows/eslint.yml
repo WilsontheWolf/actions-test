@@ -3,7 +3,7 @@ on: push
 
 jobs: 
   run:
-    if: "! contains(toJSON(github.event.commits.*.message), '[SKIP-CI]') && toJSON(github.event.commits.*.message) != 'Auto formatting.'"
+    if: "! contains(toJSON(github.event.commits.*.message), '[SKIP-CI]') && toJSON(github.event.commits.*.message) != '[ESLint] Auto formatting.'"
     name: Lint with ESLint
     runs-on: ubuntu-latest
     steps: 
@@ -15,14 +15,13 @@ jobs:
       with:
         node-version: 14.x
 
-    - name: Update source code
+    - name: Run ESLint
       run: npx eslint . --fix
 
     - name: Commit changes
       uses: EndBug/add-and-commit@v5
       with:
-        author_name: ESLint
-        message: "Auto formatting."
+        message: "[ESLint] Auto formatting."
         add: "*.js"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
