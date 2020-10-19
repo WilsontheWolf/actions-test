@@ -3,7 +3,7 @@ on: push
 
 jobs: 
   run:
-    name: Review with ESLint
+    name: Review & fix with ESLint
     runs-on: ubuntu-latest
     if: "! contains(toJSON(github.event.commits.*.message), '[SKIP-CI]') && toJSON(github.event.commits.*.message) != '[ESLint] Auto formatting.'"
     steps:
