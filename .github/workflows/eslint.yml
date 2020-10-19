@@ -1,0 +1,29 @@
+name: ESLint
+on: push
+
+jobs: 
+  run:
+    if: "! contains(toJSON(github.event.commits.*.message), '[SKIP-CI]')"
+    if: "! toJSON(github.event.commits.*.message == 'Auto formatting.'"
+    name: Lint with ESLint
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+
+    - name: Update source code
+      run: npx eslint "**" --fix
+
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v5
+      with:
+        author_name: ESLint
+        message: "Auto formatting."
+        add: "*.js"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
