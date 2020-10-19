@@ -18,7 +18,6 @@ jobs:
         with:
           reporter: github-check
           eslint_flags: '.'
-          fail_on_error: true
           filter_mode: file
 
       - name: Run ESLint
