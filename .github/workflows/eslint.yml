@@ -6,8 +6,9 @@ on:
   pull_request:
 
 jobs:
-  setup:
-    name: Setup the Environment
+  fix:
+    name: Fix code [Push]
+    if: "github.event == 'push' || ! contains(toJSON(github.event.commits.*.message), '[SKIP-CI]') && toJSON(github.event.commits.*.message) != '[ESLint] Auto formatting.'"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -17,12 +18,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-  fix:
-    name: Fix code [Push]
-    if: "github.event == 'push' || ! contains(toJSON(github.event.commits.*.message), '[SKIP-CI]') && toJSON(github.event.commits.*.message) != '[ESLint] Auto formatting.'"
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
       - name: Run ESLint
         run: npx eslint . --fix
 
@@ -39,5 +34,12 @@ jobs:
     runs-on: ubuntu-latest
     if: "github.event == 'pull_request'"
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
       - name: Run ESLint
         run: npx eslint .
