@@ -1,4 +1,4 @@
-name: ESLint Review
+name: ESLint Review & fix
 on: push
 
 jobs: 
