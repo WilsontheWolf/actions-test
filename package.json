@@ -1,0 +1,8 @@
+{
+    "name": "actions-test",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/WilsontheWolf/actions-test",
+    "author": "WilsontheWolf",
+    "license": "MIT"
+}
