@@ -1,5 +1,8 @@
 name: ESLint
-on: push
+on:
+   push:
+    paths:
+    - '**.js'
 
 jobs: 
   run:
