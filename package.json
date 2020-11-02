@@ -4,5 +4,8 @@
     "main": "index.js",
     "repository": "https://github.com/WilsontheWolf/actions-test",
     "author": "WilsontheWolf",
-    "license": "MIT"
+    "license": "MIT",
+    "dependencies": {
+        "is-even": "^1.0.0"
+    }
 }
