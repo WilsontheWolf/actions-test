@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Install ESLint
-        run: npm install --no-package-lock --no-save eslint
+        run: yarn add eslint --no-lockfile --no-save
       - name: Check Code
         uses: reviewdog/action-eslint@v1
         with:
